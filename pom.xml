@@ -9,6 +9,8 @@
         <module>serialier</module>
         <module>validation</module>
         <module>aspect</module>
+        <module>stateMachine</module>
+        <module>spring-annotation-analysis</module>
     </modules>
 
     <parent>
