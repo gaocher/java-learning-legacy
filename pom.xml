@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.fincloud.metis</groupId>
-    <artifactId>metis</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <groupId>com.spring.learning</groupId>
+    <artifactId>learing</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>serialier</module>
@@ -11,12 +11,15 @@
         <module>aspect</module>
         <module>stateMachine</module>
         <module>spring-annotation-analysis</module>
+        <module>jpa</module>
+        <module>spring-batch-learning</module>
+        <module>test</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
+        <version>1.4.3.RELEASE</version>
     </parent>
     
 </project>
