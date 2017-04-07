@@ -13,7 +13,6 @@
         <module>spring-annotation-analysis</module>
         <module>jpa</module>
         <module>spring-batch-learning</module>
-        <module>test</module>
     </modules>
 
     <parent>
