@@ -2,6 +2,7 @@ package learning.service;
 
 import learning.dao.PersonDAO;
 import learning.model.Person;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import javax.persistence.PersistenceContext;
  * Created by isaac on 27/03/2017.
  */
 @Service
+@Slf4j
 public class PersonService {
     @Autowired
     private PersonDAO personDAO;
@@ -31,8 +33,7 @@ public class PersonService {
 
     @Async
     public Person asyncSave() throws InterruptedException {
-        Thread.sleep(2000L);
-        System.err.println(Thread.currentThread().getName() + " PersonService async Save"+entityManager.toString());
+//        Thread.sleep(2000L);
         Person person = new Person();
         person.setName("asyncSave");
         Person save = personDAO.save(person);

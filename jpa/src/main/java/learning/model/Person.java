@@ -1,16 +1,12 @@
 package learning.model;
 
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 /**
  * Created by isaac on 27/03/2017.
  */
 @Entity
-public class Person {
+public class Person extends TenantEntity{
     @Id
     @GeneratedValue
     private Long id;
@@ -18,8 +14,7 @@ public class Person {
     private String name;
     private Integer age;
 
-    @Cascade(CascadeType.ALL)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "person",fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private Address address;
 
     @Version
@@ -66,12 +61,16 @@ public class Person {
         this.version = version;
     }
 
+    public void getLazyField(){
+        System.err.println(address);
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                '}';
+                '}'+super.toString();
     }
 }

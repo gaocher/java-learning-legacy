@@ -1,5 +1,8 @@
 package learning.basic;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+
 /**
  * Created by isaac on 08/04/2017.
  */
@@ -30,6 +33,22 @@ public class Main {
         outer.calc();
         System.out.println(data);
 //        return outer;
+//        try {
+//            shellCommandTest();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        numTest();
+    }
+
+    public void shellCommandTest() throws IOException {
+        Runtime.getRuntime().exec("/bin/sh /Users/isaac/Workspace/myProjects/learning/basic/src/main/resources/create.sh abc.txt");
+    }
+
+    public void ex(){
+        final Data data = new Data("tj",100);
+//        data = new Data("xx",100);
+        data.setValue(101);
     }
 
     @Override
@@ -39,8 +58,17 @@ public class Main {
                 '}';
     }
 
+    public void numTest(){
+        BigDecimal bigDecimal = new BigDecimal(10.3435);
+        BigDecimal v = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+        System.out.println(v);
+    }
+
     public static void main(String[] args){
         new Main().execute();
     }
+
+
+
 
 }

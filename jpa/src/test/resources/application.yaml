@@ -19,3 +19,34 @@ spring:
           batch_size: 0
       properties:
         dialect: org.hibernate.dialect.H2Dialect
+
+#spring:
+#    datasource:
+#        url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=utf-8
+#        username: zeus
+#        password: zeus123
+#        driver-class-name: com.mysql.jdbc.Driver
+#        type: com.zaxxer.hikari.HikariDataSource
+#        connection-timeout: 5000
+#        idle-timeout: 12000
+#        max-lifetime: 900000
+#        minimum-idle: 5
+#        maximum-pool-size: 80
+#        connection-test-query: SELECT 1
+#    rabbitmq:
+#      host: 10.12.0.142
+#      port: 5672
+#      username: metis
+#      password: metis
+#      virtual-host: fincloud
+#      connection-timeout: 5000
+#    jpa:
+#      database: mysql
+#      show-sql: true
+#      hibernate:
+#        ddl-auto: create
+#        naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+#        jdbc:
+#          batch_size: 0
+#      properties:
+#        dialect: org.hibernate.dialect.MySQL5Dialect

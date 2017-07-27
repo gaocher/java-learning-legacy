@@ -59,4 +59,11 @@ public class CommonService {
         address.toDto();
         return address;
     }
+
+    @Transactional
+    public void detachTest(Person person){
+        person = personDAO.save(person);
+        Address address = person.getAddress();
+        System.out.println(address);
+    }
 }
