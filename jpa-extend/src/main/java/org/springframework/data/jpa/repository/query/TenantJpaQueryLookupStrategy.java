@@ -30,61 +30,35 @@ import javax.persistence.EntityManager;
 import java.lang.reflect.Method;
 
 /**
- * Query lookup strategy to execute finders.
- *
- * @author Oliver Gierke
- * @author Thomas Darimont
+ * Query lookup strategy to support multi-tenant
  */
 public final class TenantJpaQueryLookupStrategy {
 
-    /**
-     * Private constructor to prevent instantiation.
-     */
     private TenantJpaQueryLookupStrategy() {}
 
-    /**
-     * Base class for {@link QueryLookupStrategy} implementations that need access to an {@link EntityManager}.
-     *
-     * @author Oliver Gierke
-     * @author Thomas Darimont
-     */
+
     private abstract static class AbstractQueryLookupStrategy implements QueryLookupStrategy {
 
         private final EntityManager em;
         private final QueryExtractor provider;
 
-        /**
-         * Creates a new {@link AbstractQueryLookupStrategy}.
-         *
-         * @param em
-         * @param extractor
-         * @param
-         */
+
         public AbstractQueryLookupStrategy(EntityManager em, QueryExtractor extractor) {
 
             this.em = em;
             this.provider = extractor;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.springframework.data.repository.query.QueryLookupStrategy#resolveQuery(java.lang.reflect.Method, org.springframework.data.repository.core.RepositoryMetadata, org.springframework.data.projection.ProjectionFactory, org.springframework.data.repository.core.NamedQueries)
-         */
         @Override
         public final RepositoryQuery resolveQuery(Method method, RepositoryMetadata metadata, ProjectionFactory factory,
                                                   NamedQueries namedQueries) {
+            //use TenantJpaQueryMethod to override
             return resolveQuery(new TenantJpaQueryMethod(method, metadata, factory, provider), em, namedQueries);
         }
 
         protected abstract RepositoryQuery resolveQuery(JpaQueryMethod method, EntityManager em, NamedQueries namedQueries);
     }
 
-    /**
-     * {@link QueryLookupStrategy} to create a query from the method name.
-     *
-     * @author Oliver Gierke
-     * @author Thomas Darimont
-     */
     private static class CreateQueryLookupStrategy extends AbstractQueryLookupStrategy {
 
         private final PersistenceProvider persistenceProvider;
@@ -108,24 +82,10 @@ public final class TenantJpaQueryLookupStrategy {
 
     }
 
-    /**
-     * {@link QueryLookupStrategy} that tries to detect a declared query declared via {@link } annotation followed by
-     * a JPA named query lookup.
-     *
-     * @author Oliver Gierke
-     * @author Thomas Darimont
-     */
     private static class DeclaredQueryLookupStrategy extends AbstractQueryLookupStrategy {
 
         private final EvaluationContextProvider evaluationContextProvider;
 
-        /**
-         * Creates a new {@link DeclaredQueryLookupStrategy}.
-         *
-         * @param em
-         * @param extractor
-         * @param evaluationContextProvider
-         */
         public DeclaredQueryLookupStrategy(EntityManager em, QueryExtractor extractor,
                                            EvaluationContextProvider evaluationContextProvider) {
 
@@ -169,14 +129,6 @@ public final class TenantJpaQueryLookupStrategy {
         }
     }
 
-    /**
-     * {@link QueryLookupStrategy} to try to detect a declared query first (
-     * {@link org.springframework.data.jpa.repository.Query}, JPA named query). In case none is found we fall back on
-     * query creation.
-     *
-     * @author Oliver Gierke
-     * @author Thomas Darimont
-     */
     private static class CreateIfNotFoundQueryLookupStrategy extends AbstractQueryLookupStrategy {
 
         private final DeclaredQueryLookupStrategy lookupStrategy;
@@ -215,15 +167,6 @@ public final class TenantJpaQueryLookupStrategy {
         }
     }
 
-    /**
-     * Creates a {@link QueryLookupStrategy} for the given {@link EntityManager} and {@link Key}.
-     *
-     * @param em must not be {@literal null}.
-     * @param key may be {@literal null}.
-     * @param extractor must not be {@literal null}.
-     * @param evaluationContextProvider must not be {@literal null}.
-     * @return
-     */
     public static QueryLookupStrategy create(EntityManager em, Key key, QueryExtractor extractor,
                                              EvaluationContextProvider evaluationContextProvider) {
 

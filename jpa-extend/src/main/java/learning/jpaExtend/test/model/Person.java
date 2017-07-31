@@ -1,5 +1,6 @@
 package learning.jpaExtend.test.model;
 
+import learning.jpaExtend.extend.model.TenantEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Data
-public class Person extends TenantEntity{
+public class Person extends TenantEntity {
     @Id
     @GeneratedValue
     private Long id;

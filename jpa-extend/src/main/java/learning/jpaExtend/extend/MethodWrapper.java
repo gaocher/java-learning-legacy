@@ -83,9 +83,4 @@ public class MethodWrapper {
         f.setAccessible(true);
         f.set(method,value); //IllegalAccessException
     }
-
-    public static boolean isTenantMethod(Method method){
-        Tenant annotation = method.getAnnotation(Tenant.class);
-        return annotation != null;
-    }
 }

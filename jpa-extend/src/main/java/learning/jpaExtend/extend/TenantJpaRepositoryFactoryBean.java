@@ -1,6 +1,8 @@
-package org.springframework.data.jpa.repository.support;
+package learning.jpaExtend.extend;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
+import org.springframework.data.jpa.repository.support.TenantJpaRepositoryFactory;
 
 import javax.persistence.EntityManager;
 
@@ -11,7 +13,6 @@ import javax.persistence.EntityManager;
 public class TenantJpaRepositoryFactoryBean extends JpaRepositoryFactoryBean {
     @Override
     protected TenantJpaRepositoryFactory createRepositoryFactory(EntityManager entityManager) {
-        log.info("createRepositoryFactory in TenantJpaRepositoryFactoryBean");
         return new TenantJpaRepositoryFactory(entityManager);
     }
 }

@@ -15,6 +15,8 @@
  */
 package org.springframework.data.jpa.repository.support;
 
+import learning.jpaExtend.extend.TenantJpaRepositoryImpl;
+import learning.jpaExtend.extend.model.TenantJpaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.provider.PersistenceProvider;
 import org.springframework.data.jpa.provider.QueryExtractor;
@@ -113,7 +115,10 @@ public class TenantJpaRepositoryFactory extends TenantRepositoryFactorySupport {
 
         if (isQueryDslExecutor(metadata.getRepositoryInterface())) {
             return QueryDslJpaRepository.class;
-        } else {
+        } if (isTenantRepository(metadata.getRepositoryInterface())) {
+            return TenantJpaRepositoryImpl.class;
+        }
+        else {
             return SimpleJpaRepository.class;
         }
     }
@@ -127,6 +132,10 @@ public class TenantJpaRepositoryFactory extends TenantRepositoryFactorySupport {
     private boolean isQueryDslExecutor(Class<?> repositoryInterface) {
 
         return QUERY_DSL_PRESENT && QueryDslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
+    }
+
+    private boolean isTenantRepository(Class<?> repositoryInterface) {
+        return TenantJpaRepository.class.isAssignableFrom(repositoryInterface);
     }
 
     /*

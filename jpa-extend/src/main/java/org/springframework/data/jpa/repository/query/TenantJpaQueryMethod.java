@@ -2,6 +2,7 @@ package org.springframework.data.jpa.repository.query;
 
 import learning.jpaExtend.extend.MethodWrapper;
 import learning.jpaExtend.extend.Reflections;
+import learning.jpaExtend.extend.TenantUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.h2.util.StringUtils;
 import org.springframework.data.domain.Pageable;
@@ -32,12 +33,11 @@ public class TenantJpaQueryMethod extends JpaQueryMethod {
      */
     public TenantJpaQueryMethod(Method method, RepositoryMetadata metadata, ProjectionFactory factory, QueryExtractor extractor) {
         super(method, metadata, factory, extractor);
-        log.error("tenant method");
     }
 
     @Override
     String getAnnotatedQuery() {
-        if(!MethodWrapper.isTenantMethod(getMethod())){
+        if(!TenantUtils.isTenantMethod(getMethod())){
             return super.getAnnotatedQuery();
         }
         if(StringUtils.isNullOrEmpty(super.getAnnotatedQuery())){
@@ -49,16 +49,15 @@ public class TenantJpaQueryMethod extends JpaQueryMethod {
 
     @Override
     public String getName() {
-        if(!MethodWrapper.isTenantMethod(getMethod())){
+        if(!TenantUtils.isTenantMethod(getMethod())){
             return super.getName();
         }
-
         return super.getName() + "AndTenantId";
     }
 
     @Override
     public JpaParameters getParameters() {
-        if(!MethodWrapper.isTenantMethod(getMethod())){
+        if(!TenantUtils.isTenantMethod(getMethod())){
             return super.getParameters();
         }
         if(parameters == null){

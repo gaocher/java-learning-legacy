@@ -4,12 +4,10 @@ spring:
         username: zeus
         password: zeus123
         driver-class-name: com.mysql.jdbc.Driver
-        type: com.zaxxer.hikari.HikariDataSource
         connection-timeout: 5000
         idle-timeout: 12000
         max-lifetime: 900000
         minimum-idle: 5
-        maximum-pool-size: 80
         connection-test-query: SELECT 1
     rabbitmq:
       host: 10.12.0.142

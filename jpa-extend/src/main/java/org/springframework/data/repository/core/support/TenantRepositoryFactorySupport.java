@@ -15,12 +15,10 @@
  */
 package org.springframework.data.repository.core.support;
 
-import learning.jpaExtend.contextAware.TenantContextHolder;
 import learning.jpaExtend.extend.Reflections;
-import learning.jpaExtend.extend.Tenant;
+import learning.jpaExtend.extend.TenantUtils;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.assertj.core.util.Lists;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.interceptor.ExposeInvocationInterceptor;
 import org.springframework.beans.factory.BeanFactory;
@@ -238,15 +236,15 @@ public abstract class TenantRepositoryFactorySupport extends RepositoryFactorySu
         private Object doInvoke(MethodInvocation invocation) throws Throwable {
 
             Method method = invocation.getMethod();
-            Object[] arguments = extendArguments(invocation);
+            Object[] arguments = invocation.getArguments();
 
             if (isCustomMethodInvocation(invocation)) {
-
                 Method actualMethod = repositoryInformation.getTargetClassMethod(method);
                 return executeMethodOn(customImplementation, actualMethod, arguments);
             }
 
             if (hasQueryFor(method)) {
+                arguments = TenantUtils.extendArgs(invocation);
                 return queries.get(method).execute(arguments);
             }
 
@@ -254,16 +252,6 @@ public abstract class TenantRepositoryFactorySupport extends RepositoryFactorySu
             // and we have to use the repository instance nevertheless
             Method actualMethod = repositoryInformation.getTargetClassMethod(method);
             return executeMethodOn(target, actualMethod, arguments);
-        }
-
-        private Object[] extendArguments(MethodInvocation invocation){
-            Tenant annotation = invocation.getMethod().getAnnotation(Tenant.class);
-            if(annotation == null){
-                return invocation.getArguments();
-            }
-            ArrayList<Object> objects = Lists.newArrayList(invocation.getArguments());
-            objects.add(TenantContextHolder.getTenantId());
-            return objects.toArray(new Object[objects.size()]);
         }
 
         /**

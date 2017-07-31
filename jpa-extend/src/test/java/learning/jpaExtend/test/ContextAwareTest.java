@@ -10,6 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -103,6 +106,18 @@ public class ContextAwareTest {
         executor.execute(secondRunner);
         firstRunner.waits();
         secondRunner.waits();
+    }
+
+    @Test
+    public void encodingTest() throws IOException {
+        String name = "我爱中国";
+        String s = new String(name.getBytes("utf8"));
+        File file = new File("test.txt");
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(name.getBytes("GBK"));
+
+
+        System.out.println(s);
     }
 
     private void wait(Object obj) throws InterruptedException {

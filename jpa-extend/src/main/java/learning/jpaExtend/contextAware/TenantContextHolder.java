@@ -1,5 +1,6 @@
 package learning.jpaExtend.contextAware;
 
+import learning.jpaExtend.extend.exception.TenantContextNotFoundException;
 import org.springframework.core.NamedInheritableThreadLocal;
 import org.springframework.core.NamedThreadLocal;
 
@@ -10,7 +11,7 @@ public class TenantContextHolder {
     public static Long getTenantId(){
         TenantContext tenantContext = getTenantContext();
         if(tenantContext == null){
-            throw new IllegalStateException("cannot found tenant context bound to current thread");
+            throw new TenantContextNotFoundException();
         }
         return tenantContext.getTenantId();
     }
