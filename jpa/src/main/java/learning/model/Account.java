@@ -1,15 +1,17 @@
 package learning.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  * Created by isaac on 22/05/2017.
  */
 @Entity
+@NoArgsConstructor
+@Data
 public class Account {
     @Id
     @GeneratedValue
@@ -20,32 +22,18 @@ public class Account {
     @Column(precision = 16, scale = 2)
     private BigDecimal amount = BigDecimal.ZERO;
 
-    public void deposit(BigDecimal d){
-        amount = amount.add(d);
-    }
+    @ManyToOne
+    private Person person;
 
-    public Long getId() {
-        return id;
-    }
+    @Version
+    private Integer version;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Account(String name) {
         this.name = name;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void deposit(BigDecimal d){
+        amount = amount.add(d);
     }
 
     @Override

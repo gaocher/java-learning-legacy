@@ -21,6 +21,9 @@ public class CommonService {
     @Autowired
     private PersonDAO personDAO;
 
+    @Autowired
+    private PersonService personService;
+
     @Transactional
     public Person save(){
         System.err.println(entityManager.toString());
@@ -65,5 +68,22 @@ public class CommonService {
         person = personDAO.save(person);
         Address address = person.getAddress();
         System.out.println(address);
+    }
+
+    public void transactionTest() {
+        Person person = new Person();
+        person.setName("common");
+        System.err.println("start to save");
+        Person save = personDAO.save(person);
+        System.err.println("end to save" + save);
+
+        personService.transactionTest();
+    }
+
+    @Transactional
+    public void transactionModify(Person person, String content) {
+        Address address = person.getEagerAddress();
+        address.setAddr(content);
+        personDAO.save(person);
     }
 }

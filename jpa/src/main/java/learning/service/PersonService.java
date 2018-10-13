@@ -39,4 +39,14 @@ public class PersonService {
         Person save = personDAO.save(person);
         return save;
     }
+
+    @Transactional
+    public Person transactionTest(){
+        System.err.println("PersonService"+entityManager.toString());
+        Person person = new Person();
+        person.setAge(11);
+        Person save = personDAO.save(person);
+        throw new IllegalArgumentException("transaction test");
+//        return save;
+    }
 }

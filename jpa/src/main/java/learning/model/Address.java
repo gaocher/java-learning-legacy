@@ -1,14 +1,14 @@
 package learning.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import lombok.Data;
+
+import javax.persistence.*;
 
 /**
  * Created by isaac on 29/03/2017.
  */
 
+@Data
 @Entity
 public class Address {
     @Id
@@ -17,42 +17,19 @@ public class Address {
 
     private String addr;
 
-    @OneToOne
+    @ManyToOne
     private Person person;
 
     private String uniqueKey;
 
+    @Version
+    private Integer version;
 
-    public Long getId() {
-        return id;
+    public Address() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
+    public Address(String addr) {
         this.addr = addr;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public String getUniqueKey() {
-        return uniqueKey;
-    }
-
-    public void setUniqueKey(String uniqueKey) {
-        this.uniqueKey = uniqueKey;
     }
 
     public void toDto(){

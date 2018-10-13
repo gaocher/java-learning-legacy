@@ -19,6 +19,8 @@
         <module>reactive-programming</module>
         <module>mock-server</module>
         <module>jpa-extend</module>
+        <module>unified-paying</module>
+        <module>netty</module>
     </modules>
 
     <parent>

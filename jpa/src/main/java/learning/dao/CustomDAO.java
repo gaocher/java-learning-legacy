@@ -11,11 +11,4 @@ import java.io.Serializable;
 @NoRepositoryBean
 public interface CustomDAO<T,ID extends Serializable> extends JpaRepository<T,ID> {
     T findOne(Long tenantId, ID id);
-
-    @Deprecated
-    @Override
-    default T findOne(ID id) {
-        throw new IllegalArgumentException("cannot use this method in TenantJpaRepository");
-    }
-
 }

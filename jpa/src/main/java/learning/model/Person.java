@@ -1,11 +1,18 @@
 package learning.model;
 
+import com.google.common.collect.Lists;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by isaac on 27/03/2017.
  */
 @Entity
+@Getter
+@Setter
 public class Person extends TenantEntity{
     @Id
     @GeneratedValue
@@ -17,8 +24,17 @@ public class Person extends TenantEntity{
     @OneToOne(mappedBy = "person",fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private Address address;
 
+    @OneToOne(mappedBy = "person",fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    private Address eagerAddress;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private List<Account> accounts = Lists.newArrayList();
+
     @Version
     private Long version;
+
+    @Embedded
+    private CmpKey key;
 
 
     public Long getId() {
